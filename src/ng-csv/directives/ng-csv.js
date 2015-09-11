@@ -70,7 +70,17 @@ angular.module('ngCsv.directives').
             $element.addClass($attrs.ngCsvLoadingClass || 'ng-csv-loading');
 
             CSV.stringify($scope.data(), getBuildCsvOptions()).then(function (csv) {
-              $scope.csv = csv;
+
+              if ($scope.charset.toLowerCase() === "utf-16") {
+                var arr = [];
+                for (var i = 0; i < csv.length; i++){
+                  arr.push(csv.charCodeAt(i));
+                }
+                $scope.csv = new Uint16Array(arr);
+              } else {
+                $scope.csv = csv;
+              }
+
               $element.removeClass($attrs.ngCsvLoadingClass || 'ng-csv-loading');
               deferred.resolve(csv);
             });
