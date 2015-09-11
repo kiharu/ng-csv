@@ -254,12 +254,12 @@ angular.module('ngCsv.directives').
 
             CSV.stringify($scope.data(), getBuildCsvOptions()).then(function (csv) {
 
-              if (scope.charset.toLowerCase() === "utf-16") {
+              if ($scope.charset.toLowerCase() === "utf-16") {
                 var arr = [];
-                for( var i = 0; i < csv.length; i++ ){
-                  arr.push( csv.charCodeAt(i) );
+                for (var i = 0; i < csv.length; i++){
+                  arr.push(csv.charCodeAt(i));
                 }
-                $scope.csv = new Uint16Array( arr );
+                $scope.csv = new Uint16Array(arr);
               } else {
                 $scope.csv = csv;
               }
